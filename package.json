@@ -1,0 +1,19 @@
+{
+  "name": "cmd",
+  "version": "1.0.0",
+  "description": "netolgy first lesson backend developer node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "cmd": "./cmd.js"
+  },
+  "preferGlobal": true,
+  "author": "bechterev",
+  "license": "ISC",
+  "dependencies": {
+    "readline": "^1.3.0",
+    "yargs": "^17.0.1"
+  }
+}
