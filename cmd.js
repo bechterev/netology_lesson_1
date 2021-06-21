@@ -1,10 +1,9 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 const ya = require('yargs').argv;
 const readline = require('readline');
 let current = ya._[0]==='current'?'current':ya._[0];
-
 function conditionDataCurrent(param){
-    let d = new Date()
+    let d = new Date();
     switch(true){
         case param.year:
         case param.y:
@@ -12,7 +11,7 @@ function conditionDataCurrent(param){
             break;
         case param.month:
         case param.m:
-            return [dateChange = d.getMonth(), 'M']
+            return [dateChange = d.getMonth()+1, 'M']
             break;
         case param.date:
         case param.d:
@@ -29,26 +28,31 @@ let dateChange = conditionDataCurrent(param);
     switch(dateChange[1]){
         case 'D' :
             if(oper == 'add')   nDate = new Date().setDate(dateChange[0] + value);
-            else nDate = new Date().setDate(dateChange - value);
+            else nDate = new Date().setDate(dateChange[0] - value);
             break;
         case 'Y' :
             if(oper == 'add')   nDate = new Date().setFullYear(dateChange[0] + value);
-            else nDate = new Date().setFullYear(dateChange - value);
+            else nDate = new Date().setFullYear(dateChange[0] - value);
             break;
         case 'M' :
-            if(oper == 'add')   nDate = new Date().setMonth(dateChange[0] + value);
-            else nDate = new Date().setMonth(dateChange - value);
+            if(oper == 'add')   nDate = new Date().setMonth(dateChange[0] + value -1);
+            else nDate = new Date().setMonth(dateChange[0] - value -1);
             break;
             
     }
-    
     return new Date(nDate).toISOString();
 }
-if(process.argv.length>2){
-    if(current === 'current'){
+if(process.argv.length > 2){
+   
+    if(current === 'current' ){
+        if( process.argv.length == 3)
+        console.log(conditionDataCurrent('default'))
+        else {
+            let res = conditionDataCurrent({[process.argv[3].split(/-/i).join('')]:true});
+            console.log(res[0])
+    }
     }
     else {
-        console.log(new Date().getDate())
         let param = {[process.argv[3].split(/-/i).join('')]:true};
         console.log(conditionDate(param,current,Number(process.argv[4])))
     }
